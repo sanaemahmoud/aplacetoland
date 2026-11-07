@@ -1,0 +1,34 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "uploads"
+public_folder: "/uploads"
+
+publish_mode: simple
+
+collections:
+  - name: "journal"
+    label: "Journal essays"
+    label_singular: "Essay"
+    folder: "content/posts"
+    create: true
+    format: "json"
+    extension: "json"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} · {{date}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publication date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Grief & Loss", value: "grief" }
+          - { label: "Love & Relationships", value: "love" }
+          - { label: "Identity & Belonging", value: "identity" }
+          - { label: "Memory & Time", value: "memory" }
+          - { label: "The Human Experience", value: "human" }
+      - { label: "Short introduction", name: "excerpt", widget: "text", required: false }
+      - { label: "Essay", name: "body", widget: "text" }
