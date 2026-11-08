@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>A Place to Land</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+
+  margin: 0;
+
+  background: #f4f0e8;
+
+  color: #302c27;
+
+  font: 16px/1.9 'DM Sans', sans-serif;
+
+}
+
+header {
+
+  padding: 25px;
+
+  border-bottom: 1px solid #d6cec1;
+
+}
+
+header a {
+
+  color: inherit;
+
+  text-decoration: none;
+
+  font: 22px 'Playfair Display', serif;
+
+}
+
+main {
+
+  max-width: 720px;
+
+  margin: 65px auto;
+
+  padding: 0 24px;
+
+}
+
+.meta {
+
+  color: #766e64;
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+}
+
+h1 {
+
+  font: 400 48px/1.2 'Playfair Display', serif;
+
+}
+
+.excerpt {
+
+  color: #766e64;
+
+  border-bottom: 1px solid #d6cec1;
+
+  padding-bottom: 25px;
+
+}
+
+article p { margin-bottom: 25px; }
+
+.back { color: #766e64; }
+
+@media(max-width:600px) {
+
+  h1 { font-size: 37px; }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header><a href="index.html">a place to land.</a></header>
+
+<main id="essay">Loading essay...</main>
+
+<script>
+
+fetch('content/posts/2026-11-07-i-dont-want-to-become-someone-who-feels-less.json')
+
+.then(response => {
+
+  if (!response.ok) throw new Error('Essay not found');
+
+  return response.json();
+
+})
+
+.then(post => {
+
+  const main = document.getElementById('essay');
+
+  const title = document.createElement('h1');
+
+  title.textContent = post.title;
+
+  const meta = document.createElement('div');
+
+  meta.className = 'meta';
+
+  meta.textContent = 'The Human Experience · ' + post.date;
+
+  const excerpt = document.createElement('p');
+
+  excerpt.className = 'excerpt';
+
+  excerpt.textContent = post.excerpt;
+
+  const article = document.createElement('article');
+
+  post.body.trim().split(/\n\s*\n/).forEach(paragraph => {
+
+    const p = document.createElement('p');
+
+    p.textContent = paragraph.trim();
+
+    article.appendChild(p);
+
+  });
+
+  const back = document.createElement('a');
+
+  back.className = 'back';
+
+  back.href = 'index.html#journal';
+
+  back.textContent = '← Back to the journal';
+
+  main.replaceChildren(meta, title, excerpt, article, back);
+
+})
+
+.catch(() => {
+
+  document.getElementById('essay').textContent = 'This essay could not be loaded. Please try again soon.';
+
+});
+
+</script>
+
+</body>
+
+</html>
